@@ -8,7 +8,6 @@ If you liked the repo do star it.
 MySql (MariaDB)
 
 #Contents
-
 - Project Description
 - Basic Strucutre
   - Functional requirements
