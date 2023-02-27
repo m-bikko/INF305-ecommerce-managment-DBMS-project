@@ -1,13 +1,12 @@
 # INF305-ecommerce-managment-DBMS-project
-
 As a part of our University SDU Curriculum, I made this project for Database Management Systems (DBMS)
 This project contains theoretical as well as implementation in SQL.
 If you liked the repo do star it.
  
-#Pre-requisite
+# Pre-requisite
 MySql (MariaDB)
 
-#Contents
+# Contents
 - Project Description
 - Basic Strucutre
   - Functional requirements
