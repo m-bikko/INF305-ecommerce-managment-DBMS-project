@@ -51,7 +51,19 @@ Amongst many stuff that a web web site calls for the maximum critical is a datab
 
 
 ## 3.Implementation
+You can directly copy and paste all the commands from the text given here into the SQL console to create and insert values into your table
 ### 3.1 Creating tables
+
+```sql
+  CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    email VARCHAR(100),
+    phone VARCHAR(20),
+    address VARCHAR(200)
+  );
+```
+
 ### 3.2 Inserting data
 
 ## 4.Queries
