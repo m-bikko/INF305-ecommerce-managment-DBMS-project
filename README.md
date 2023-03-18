@@ -46,7 +46,7 @@ Amongst many stuff that a web web site calls for the maximum critical is a datab
   - Admin can view details of customer who have not purchased anything.
   - Admin can view total profit earned from the website.
 ### 2.2 ER diagram
-  
+  ![ER diagram](https://github.com/diaskabdualiev1/INF305-ecommerce-managment-DBMS-project/blob/cce25a0684c8cdd667773f06754e6275b78e90d8/images/er_diagram.png)
 ### 2.3 Relational database schema
 
 
