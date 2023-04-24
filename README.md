@@ -334,7 +334,7 @@ end;
 ### 4.2 Procedure which does group by information 
 Query which does return the number of items in sale by goups using command group by
 ```sql
-CREATE OR REPLACE PROCEDURE simple_product_info_by_category AS
+CREATE OR REPLACE PROCEDURE group_by_category AS
   CURSOR category_cursor IS
     SELECT
       ca.name1 AS category_name,
@@ -359,13 +359,13 @@ END;
 To execute procedure use:
 ```sql
 BEGIN
-  simple_product_info_by_category;
+  group_by_category;
 END;
 ```
 ### 4.3 Function which counts the number of records 
 
 ```sql
-CREATE OR REPLACE FUNCTION count_records_in_table(table_name IN VARCHAR2) RETURN NUMBER AS
+CREATE OR REPLACE FUNCTION count_r_table(table_name IN VARCHAR2) RETURN NUMBER AS
   record_count NUMBER;
   v_sql         VARCHAR2(1000);
 BEGIN
@@ -380,7 +380,7 @@ Its Execution block of code
 DECLARE
   record_count NUMBER;
 BEGIN
-  record_count := count_records_in_table('product_details');--I can also write another table's name.
+  record_count := count_r_table('product_details');--I can also write another table's name.
   DBMS_OUTPUT.PUT_LINE('Number of records in the product_details table: ' || record_count);--also its just an example
 END;
 ```
@@ -389,18 +389,18 @@ END;
 
 As our table is not just a e-commerce database, we come to decision that we need to take title of pruduct which is not less than 5 character
 ```sql
-CREATE OR REPLACE TRIGGER check_product_title_length
+CREATE OR REPLACE TRIGGER title_length
   BEFORE INSERT
   ON products
   FOR EACH ROW
 DECLARE
-  title_too_short EXCEPTION;
+  title_short EXCEPTION;
 BEGIN
   IF LENGTH(:NEW.title) < 5 THEN
-    RAISE title_too_short;
+    RAISE title_short;
   END IF;
 EXCEPTION
-  WHEN title_too_short THEN
+  WHEN title_short THEN
     RAISE_APPLICATION_ERROR(-20001, 'Error: Product title must be at least 5 characters long.');
 END;
 ```
