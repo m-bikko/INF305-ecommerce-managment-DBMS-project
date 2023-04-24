@@ -54,96 +54,133 @@ Amongst many stuff that a web web site calls for the maximum critical is a datab
 You can directly copy and paste all the commands from the text given here into the SQL console to create and insert values into your table
 ### 3.1 Creating tables
 
-Customers Table:
-This table contains information about all the customers, including customer id, name, email, phone number, and address.
+Users1 Table:
+This table contains information about all users, including web-app user_id, name, password and email.
 
 ```sql
-  CREATE TABLE customers (
-    customer_id INT PRIMARY KEY,
-    name VARCHAR(50),
-    email VARCHAR(100),
-    phone VARCHAR(20),
-    address VARCHAR(200)
+  CREATE TABLE users1 (
+    user_id NUMBER PRIMARY KEY,
+    username VARCHAR2(50) NOT NULL,
+    email VARCHAR2(100) UNIQUE NOT NULL,
+    password1 VARCHAR2(100) NOT NULL
   );
 ```
-Orders Table:
-This table contains information about all the orders, including order id, customer id, order date, total amount, and payment method.
+Addresses Table:
+This table contains more information about user's address, such as: address_id, user_id, street, city, state, zip_code, country.
 
 ```sql
-CREATE TABLE orders (
-  order_id INT PRIMARY KEY,
-  customer_id INT,
-  order_date DATE,
-  total_amount DECIMAL(10,2),
-  payment_method VARCHAR(50),
-  FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
-);
-```
-Order Items Table:
-This table contains information about the items ordered in each order, including order item id, order id, product id, quantity, and price.
-
-```sql
-CREATE TABLE order_items (
-  order_item_id INT PRIMARY KEY,
-  order_id INT,
-  product_id INT,
-  quantity INT,
-  price DECIMAL(10,2),
-  FOREIGN KEY (order_id) REFERENCES orders(order_id),
-  FOREIGN KEY (product_id) REFERENCES products(product_id)
-);
-```
-Products Table:
-This table contains information about all the products, including product id, product name, description, image, price, and quantity in stock.
-
-```sql
-CREATE TABLE products (
-  product_id INT PRIMARY KEY,
-  product_name VARCHAR(50),
-  description TEXT,
-  image_url VARCHAR(200),
-  price DECIMAL(10,2),
-  stock_quantity INT,
-  category_id INT,
-  supplier_id INT,
-  FOREIGN KEY (category_id) REFERENCES categories(category_id),
-  FOREIGN KEY (supplier_id) REFERENCES suppliers(supplier_id)
+CREATE TABLE addresses (
+    address_id NUMBER PRIMARY KEY,
+    user_id NUMBER,
+    street VARCHAR2(100) NOT NULL,
+    city VARCHAR2(50) NOT NULL,
+    state1 VARCHAR2(50) NOT NULL,
+    zip_code VARCHAR2(10) NOT NULL,
+    country VARCHAR2(50) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users1(user_id)
 );
 ```
 Categories Table:
-This table contains information about all the categories of products, including category id and category name.
+This table contains information about existing categories.
 
 ```sql
 CREATE TABLE categories (
-  category_id INT PRIMARY KEY,
-  category_name VARCHAR(50)
+    category_id NUMBER PRIMARY KEY,
+    name1 VARCHAR2(50) NOT NULL
 );
 ```
-Reviews Table:
-This table contains information about all the reviews submitted by customers, including review id, customer id, product id, rating, and review text.
+Manifacturers Table:
+This table contains information about manifacturers.
+
+```sql
+CREATE TABLE manufacturers (
+    manufacturer_id NUMBER PRIMARY KEY,
+    name1 VARCHAR2(100) NOT NULL
+);
+```
+Payment Method Table:
+This table contains information about payment types.
+
+```sql
+CREATE TABLE payment_methods (
+    payment_method_id NUMBER PRIMARY KEY,
+    name1 VARCHAR2(50) NOT NULL
+);
+```
+Orders Table:
+This table contains information about orders. Such as: order_id, user_id, payment_method, address_id, order_date and total_price. 
+
+```sql
+CREATE TABLE orders (
+    order_id NUMBER PRIMARY KEY,
+    user_id NUMBER,
+    payment_method_id NUMBER,
+    address_id NUMBER,
+    order_date DATE NOT NULL,
+    total_price NUMBER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users1(user_id),
+    FOREIGN KEY (payment_method_id) REFERENCES payment_methods(payment_method_id),
+    FOREIGN KEY (address_id) REFERENCES addresses(address_id)
+);
+```
+Products Table:
+This table contains information about all stored products, which contains: product_id, title, category_id, manifacturer_id, price, stock, creation_date.
+
+```sql
+CREATE TABLE products (
+    product_id NUMBER PRIMARY KEY,
+    title VARCHAR2(100) NOT NULL,
+    category_id NUMBER,
+    manufacturer_id NUMBER,
+    price NUMBER NOT NULL,
+    stock NUMBER NOT NULL,
+    creation_date DATE NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES categories(category_id),
+    FOREIGN KEY (manufacturer_id) REFERENCES manufacturers(manufacturer_id)
+);
+```
+
+Order Items Table:
+This table contains information about all details of ordered Items.
+
+```sql
+CREATE TABLE order_items (
+    order_item_id NUMBER PRIMARY KEY,
+    order_id NUMBER,
+    product_id NUMBER,
+    quantity NUMBER NOT NULL,
+    price NUMBER NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+```
+
+Product Details Table:
+This table contains information about product information.
+
+```sql
+CREATE TABLE product_details (
+    product_detail_id NUMBER PRIMARY KEY,
+    product_id NUMBER,
+    key1 VARCHAR2(50) NOT NULL,
+    value1 VARCHAR2(200) NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+```
+
+Review Table:
+This table contains information about feedback.
 
 ```sql
 CREATE TABLE reviews (
-  review_id INT PRIMARY KEY,
-  customer_id INT,
-  product_id INT,
-  rating INT,
-  review_text TEXT,
-  FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
-  FOREIGN KEY (product_id) REFERENCES products(product_id)
-);
-```
-Suppliers Table:
-This table contains information about all the suppliers of products, including supplier id, supplier name, contact name, address, phone number, and email.
-
-```sql
-CREATE TABLE suppliers (
-  supplier_id INT PRIMARY KEY,
-  supplier_name VARCHAR(50),
-  contact_name VARCHAR(50),
-  address VARCHAR(200),
-  phone VARCHAR(20),
-  email VARCHAR(100)
+    review_id NUMBER PRIMARY KEY,
+    product_id NUMBER,
+    user_id NUMBER,
+    rating NUMBER NOT NULL,
+    comment1 VARCHAR2(400),
+    review_date DATE NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(product_id),
+    FOREIGN KEY (user_id) REFERENCES users1(user_id)
 );
 ```
 
