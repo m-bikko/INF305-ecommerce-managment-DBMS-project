@@ -386,6 +386,31 @@ END;
 ```
 ### 4.4 Procedure which uses SQL%ROWCOUNT to determine the number of rows affected
 ### 4.5 Add user-defined exception which disallows to enter title of item (e.g. book) to be less than 5 characters
+
+As our table is not just a e-commerce database, we come to decision that we need to take title of pruduct which is not less than 5 character
+```sql
+CREATE OR REPLACE TRIGGER check_product_title_length
+  BEFORE INSERT
+  ON products
+  FOR EACH ROW
+DECLARE
+  title_too_short EXCEPTION;
+BEGIN
+  IF LENGTH(:NEW.title) < 5 THEN
+    RAISE title_too_short;
+  END IF;
+EXCEPTION
+  WHEN title_too_short THEN
+    RAISE_APPLICATION_ERROR(-20001, 'Error: Product title must be at least 5 characters long.');
+END;
+```
+
+To execute we will give an example
+
+```sql
+ INSERT INTO products (product_id, title, category_id, manufacturer_id, price, stock, creation_date)
+VALUES (4, 'LTV', 3, 3, 500000, 100, SYSDATE);
+```
 ### 4.6 Create a trigger before insert on any entity which will show the current number of rows in the table
 
 
