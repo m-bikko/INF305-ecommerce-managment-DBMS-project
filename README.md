@@ -332,6 +332,36 @@ end;
 ## 4.Queries
 ### 4.1 Basic queries
 ### 4.2 Procedure which does group by information 
+Query which does return the number of items in sale by goups using command group by
+```
+CREATE OR REPLACE PROCEDURE simple_product_info_by_category AS
+  CURSOR category_cursor IS
+    SELECT
+      ca.name1 AS category_name,
+      COUNT(p.product_id) AS product_count
+    FROM
+      categories ca
+      JOIN products p ON ca.category_id = p.category_id
+    GROUP BY
+      ca.name1;
+
+  category_info category_cursor%ROWTYPE;
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Category' || ': ' || 'Product Count');
+  DBMS_OUTPUT.PUT_LINE('--------' || '   ------------');
+
+  FOR category_info IN category_cursor LOOP
+    DBMS_OUTPUT.PUT_LINE(category_info.category_name || ': ' || category_info.product_count);
+  END LOOP;
+END;
+```
+
+To execute procedure use:
+```
+BEGIN
+  simple_product_info_by_category;
+END;
+```
 ### 4.3 Function which counts the number of records 
 ### 4.4 Procedure which uses SQL%ROWCOUNT to determine the number of rows affected
 ### 4.5 Add user-defined exception which disallows to enter title of item (e.g. book) to be less than 5 characters
