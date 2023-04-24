@@ -33,22 +33,65 @@ Amongst many stuff that a web web site calls for the maximum critical is a datab
 ## 2.Basic Structure
 ### 2.1 Functional requirements
   - A new user can register on the website.
+```sql
+INSERT INTO users1 (user_id, username, email, password1)
+--values:(user_id int, username String, email String, password1 String)
+VALUES (, '', '', '');
+```
   - A customer can see details of the product present in the cart
+```sql
+--We dont have an cart table
+```
   - A customer can view his order history.
+```sql
+SELECT o.order_id, o.order_date, o.total_price
+FROM orders o
+WHERE o.user_id = :customer_user_id
+ORDER BY o.order_date DESC;
+```
   - Admin can start a sale with certain discount on every product.
+```sql
+UPDATE products
+SET price = price * (1 - :discount_percentage / 100);
+```
   - Customer can filter the product based on the product details.
+```sql
+SELECT p.product_id, p.title, p.price
+FROM products p
+JOIN product_details pd ON p.product_id = pd.product_id
+WHERE pd.key1 = :filter_key AND pd.value1 = :filter_value;
+```
   - A customer can add or delete a product from the cart.
+```sql
+--We dont have cart
+```
   - A seller can unregister/ stop selling his product.
+```sql
+UPDATE products
+SET stock = 0
+WHERE product_id = :product_id;
+```
   - A seller/ customer can update his details.
+```sql
+UPDATE users1
+SET username = :new_username, email = :new_email, password1 = :new_password
+WHERE user_id = :user_id;
+```
   - Admin can view the products purchased on particular date.
+
   - Admin can view number of products sold on a particular date.
   - A customer can view the total price of product present in the cart unpurchased.
   - Admin can view details of customer who have not purchased anything.
   - Admin can view total profit earned from the website.
+
+```sql
+SELECT SUM(oi.price * oi.quantity) AS total_profit
+FROM order_items oi;
+```
 ### 2.2 ER diagram
   ![ER diagram](https://github.com/m-bikko/INF305-ecommerce-managment-DBMS-project/blob/main/er_diagram.png)
 ### 2.3 Relational database schema
-
+  
 
 ## 3.Implementation
 You can directly copy and paste all the commands from the text given here into the SQL console to create and insert values into your table
