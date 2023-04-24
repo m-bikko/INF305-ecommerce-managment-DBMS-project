@@ -38,10 +38,6 @@ INSERT INTO users1 (user_id, username, email, password1)
 --values:(user_id int, username String, email String, password1 String)
 VALUES (, '', '', '');
 ```
-  - A customer can see details of the product present in the cart
-```sql
---We dont have an cart table
-```
   - A customer can view his order history.
 ```sql
 SELECT o.order_id, o.order_date, o.total_price
@@ -61,10 +57,6 @@ FROM products p
 JOIN product_details pd ON p.product_id = pd.product_id
 WHERE pd.key1 = :filter_key AND pd.value1 = :filter_value;
 ```
-  - A customer can add or delete a product from the cart.
-```sql
---We dont have cart
-```
   - A seller can unregister/ stop selling his product.
 ```sql
 UPDATE products
@@ -77,11 +69,6 @@ UPDATE users1
 SET username = :new_username, email = :new_email, password1 = :new_password
 WHERE user_id = :user_id;
 ```
-  - Admin can view the products purchased on particular date.
-
-  - Admin can view number of products sold on a particular date.
-  - A customer can view the total price of product present in the cart unpurchased.
-  - Admin can view details of customer who have not purchased anything.
   - Admin can view total profit earned from the website.
 
 ```sql
