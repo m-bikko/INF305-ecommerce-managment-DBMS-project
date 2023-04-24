@@ -333,7 +333,7 @@ end;
 ### 4.1 Basic queries
 ### 4.2 Procedure which does group by information 
 Query which does return the number of items in sale by goups using command group by
-```
+```sql
 CREATE OR REPLACE PROCEDURE simple_product_info_by_category AS
   CURSOR category_cursor IS
     SELECT
@@ -357,7 +357,7 @@ END;
 ```
 
 To execute procedure use:
-```
+```sql
 BEGIN
   simple_product_info_by_category;
 END;
