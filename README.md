@@ -363,6 +363,27 @@ BEGIN
 END;
 ```
 ### 4.3 Function which counts the number of records 
+
+```sql
+CREATE OR REPLACE FUNCTION count_records_in_table(table_name IN VARCHAR2) RETURN NUMBER AS
+  record_count NUMBER;
+  v_sql         VARCHAR2(1000);
+BEGIN
+  v_sql := 'SELECT COUNT(*) FROM ' || table_name;
+  EXECUTE IMMEDIATE v_sql INTO record_count;
+  RETURN record_count;
+END;
+```
+
+Its Execution block of code
+```sql
+DECLARE
+  record_count NUMBER;
+BEGIN
+  record_count := count_records_in_table('product_details');--I can also write another table's name.
+  DBMS_OUTPUT.PUT_LINE('Number of records in the product_details table: ' || record_count);--also its just an example
+END;
+```
 ### 4.4 Procedure which uses SQL%ROWCOUNT to determine the number of rows affected
 ### 4.5 Add user-defined exception which disallows to enter title of item (e.g. book) to be less than 5 characters
 ### 4.6 Create a trigger before insert on any entity which will show the current number of rows in the table
