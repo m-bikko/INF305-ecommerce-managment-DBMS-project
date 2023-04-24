@@ -387,6 +387,23 @@ FROM products
 JOIN categories ON products.category_id = categories.category_id
 WHERE categories.name1 = 'electronics';
 ```
+
+ - Count of number in each category
+
+```sql
+SELECT categories.name1 AS category_name, COUNT(*) AS total_products
+FROM products
+JOIN categories ON products.category_id = categories.category_id
+GROUP BY categories.name1;
+```
+
+ - Products that are out of stock
+ 
+```sql
+SELECT *
+FROM products
+WHERE stock = 0;
+```
 ### 4.2 Procedure which does group by information 
 Query which does return the number of items in sale by goups using command group by
 ```sql
