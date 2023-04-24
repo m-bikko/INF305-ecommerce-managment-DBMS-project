@@ -432,4 +432,27 @@ VALUES (4, 'LTV', 3, 3, 500000, 100, SYSDATE);
 ```
 ### 4.6 Create a trigger before insert on any entity which will show the current number of rows in the table
 
+In Oracle its impossible to create 1 trigger and use it for many tables, So We created only 1(Products) to show that its possible to create a trigger that will show number of existing rows before data insertion in executed:
 
+```sql
+CREATE OR REPLACE TRIGGER rowsN_before_insert
+  BEFORE INSERT
+  ON products
+  FOR EACH ROW
+DECLARE
+  v_row_count NUMBER;
+BEGIN
+  SELECT COUNT(*)
+  INTO v_row_count
+  FROM products;
+  DBMS_OUTPUT.PUT_LINE('Current number of rows in the Products table: ' || v_row_count);
+END;
+```
+
+Execution example:
+
+```sql
+--its important to have unique id and need to remember that somewhere it is foreign constraints.
+INSERT INTO products (product_id, title, category_id, manufacturer_id, price, stock, creation_date)
+VALUES (1235, 'Example Product', 1, 1, 100, 50, SYSDATE);
+```
