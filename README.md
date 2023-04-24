@@ -370,8 +370,7 @@ SELECT * FROM TABLE; --write a name of needed table
 
  - Retrieve all reviews for a specific product:
 
-```
-sql
+```sql
 Copy code
 SELECT reviews.*, users1.username
 FROM reviews
@@ -379,8 +378,7 @@ JOIN users1 ON reviews.user_id = users1.user_id
 WHERE reviews.product_id = 123;
 ```
  - Retrieve all products in a specific category:
-```
-sql
+```sql
 Copy code
 SELECT products.*
 FROM products
