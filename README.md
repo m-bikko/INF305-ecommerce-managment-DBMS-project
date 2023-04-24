@@ -384,7 +384,26 @@ BEGIN
   DBMS_OUTPUT.PUT_LINE('Number of records in the product_details table: ' || record_count);--also its just an example
 END;
 ```
+
 ### 4.4 Procedure which uses SQL%ROWCOUNT to determine the number of rows affected
+Code explains how many tuples were affected during update
+```sql
+CREATE OR REPLACE PROCEDURE update_stock(p_product_id NUMBER, p_stock NUMBER) AS
+BEGIN
+  UPDATE products
+  SET stock = stock + p_stock
+  WHERE product_id = p_product_id;
+  DBMS_OUTPUT.PUT_LINE('Rows affected: ' || SQL%ROWCOUNT);
+  COMMIT;
+END;
+```
+
+Execution code:
+```sql
+BEGIN
+  update_stock(1, 10);
+END;
+```
 ### 4.5 Add user-defined exception which disallows to enter title of item (e.g. book) to be less than 5 characters
 
 As our table is not just a e-commerce database, we come to decision that we need to take title of pruduct which is not less than 5 character
